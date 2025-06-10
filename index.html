@@ -11,6 +11,20 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,900" rel="stylesheet"> 
 </head>
+
+  <style>
+    .is-invalid {
+      border-color: red;
+    }
+    .text-danger {
+      color: red;
+      font-size: 12px;
+    }
+    .form__row {
+      margin-bottom: 16px;
+    }
+  </style>
+
 <body>
 	<header class="header">
 		<div class="header__content header__content--fix-width">
@@ -561,6 +575,20 @@
 			</div>
 
 	</footer>
+	  <!-- Toast -->
+  <div id="toast" style="
+  display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 10011;">
+    Message sent successfully!
+  </div>
 	
 
 	  <section class="modal modal--signuplogin">
@@ -622,68 +650,93 @@
 						<div class="modal__switch modal__switch--forgot" data-popup="forgot"></div>
 						<input type="submit" name="submit" class="form__submit btn btn--green-bg" id="submitl" value="SUBMIT" />
 						</form> -->
-						<form class="form__container" id="LoginForm" method="post" action="sendmail.php">
-  <div class="form__row">
-    <label class="form__label" for="namec">Name</label>
-    <input name="namec" id="namec" class="form__input" type="text" required />
-    <span class="form__row-border"></span>
-  </div>
-  <div class="form__row">
-    <label class="form__label" for="phonec">Best contact</label>
-    <input name="phonec" id="phonec" class="form__input" type="phone" />
-    <span class="form__row-border"></span>
-  </div>
-  <div class="form__row">
-    <label class="form__label" for="emailc">Email</label>
-    <input name="emailc" id="emailc" class="form__input" type="email" required />
-    <span class="form__row-border"></span>
-  </div>
-  <div class="form__row">
-    <label class="form__label" for="businessc">Company</label>
-    <input name="businessc" id="businessc" class="form__input" type="text" />
-    <span class="form__row-border"></span>
-  </div><br><br>
+						  <form class="form__container" id="LoginForm">
+    <!-- Name -->
     <div class="form__row">
-    <label class="form__label" for="co-numberc">Company number</label>
-    <input name="co-numberc" id="co-numberc" class="form__input" type="phone" />
-    <span class="form__row-border"></span>
-  </div><br><br>
-  <div class="form__row">
-    <label class="form__label" for="addressc">Address</label>
-    <input name="addressc" id="addressc" class="form__input" type="text" />
-    <span class="form__row-border"></span>
-  </div><br><br>
-  <div class="form__radio"><input id="radio1" name="radio" value="radio1" checked type="radio"><label for="radio1">Pre launch £499 yearly</label></div>
-	<div class="form__radio"><input id="radio2" name="radio" value="radio2" type="radio"><label for="radio2">Standard £999 yearly</label></div><br>
-	<p>Maintain 10 clients registered and pay zero renewals</p><br>
-	<p>We'll email you an invoice with payment details</p><br>
-	<h3 class="form__subtitle">Attach logo here</h3>
-		<a>Image should be 1000px x 300px, PNG or JPG, max file size: 1Mb</a>
-		<div class="form__file"><label for="fileupload" class="file__label">Upload</label>
-		<input id="fileupload" type="file"/>
-		</div>
-	<div class="form__checkbox"><input id="checkbox1" name="checkbox1" value="checkbox1" checked type="checkbox"><label for="checkbox1">I agree to the <a href="tos.html">Terms and conditions</a> and the <a href="privacy.html">Privacy policy</a> of this platform</label></div><br>
-  
-  <input type="submit" name="submit" class="form__submit btn btn--blue-bg" id="submitl" value="SUBMIT" />
-	<!-- <div id="form-message" style="color:green; margin-top:10px;"></div> -->
-<div id="toast" style="
-  display: none;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: #28a745;
-  color: white;
-  padding: 15px 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  z-index: 9999;
-">
-  Message sent successfully!
-</div>
+      <label class="form__label" for="namec">Name
+        <span id="error-namec" class="text-danger" style="display:none;"></span>
+      </label>
+      <input name="namec" id="namec" class="form__input" type="text" />
+    </div>
+
+    <!-- Phone -->
+    <div class="form__row">
+      <label class="form__label" for="phonec">Best contact
+        <span id="error-phonec" class="text-danger" style="display:none;"></span>
+      </label>
+      <input name="phonec" id="phonec" class="form__input" type="tel" />
+    </div>
+
+    <!-- Email -->
+    <div class="form__row">
+      <label class="form__label" for="emailc">Email
+        <span id="error-emailc" class="text-danger" style="display:none;"></span>
+      </label>
+      <input name="emailc" id="emailc" class="form__input" type="email" />
+    </div>
+
+    <!-- Company -->
+    <div class="form__row">
+      <label class="form__label" for="businessc">Company
+		<span id="error-businessc" class="text-danger" style="display:none;"></span>
+	  </label>
+      <input name="businessc" id="businessc" class="form__input" type="text" />
+    </div>
+
+    <!-- Company number -->
+    <div class="form__row">
+      <label class="form__label" for="conumberc">Company number
+		<span id="error-conumberc" class="text-danger" style="display:none;"></span>
+	  </label>
+      <input name="conumberc" id="conumberc" class="form__input" type="number"  />
+    </div>
+
+    <!-- Address -->
+    <div class="form__row">
+      <label class="form__label" for="addressc">Address
+        <span id="error-addressc" class="text-danger" style="display:none;"></span>
+      </label>
+      <input name="addressc" id="addressc" class="form__input" type="text" placeholder="" autocomplete="off" />
+    </div>
+
+    <!-- Plan Options -->
+    <div class="form__radio">
+      <input id="radio1" name="radio" value="prelaunch - £499" checked type="radio">
+      <label for="radio1">Pre launch £499 yearly</label>
+    </div>
+    <div class="form__radio">
+      <input id="radio2" name="radio" value="'standard - £999" type="radio">
+      <label for="radio2">Standard £999 yearly</label>
+    </div><br>
+
+    <p>Maintain 10 clients registered and pay zero renewals</p><br>
+    <p>We'll email you an invoice with payment details</p><br>
+
+    <!-- File Upload -->
+    <h3 class="form__subtitle">Attach logo here</h3>
+    <a>Image should be 1000px x 300px, PNG or JPG, max file size: 1Mb</a>
+    <div class="form__file">
+      <label for="fileupload" class="file__label">Upload
+		<span id="file-name" class="file__name"></span>
+	</label>
+	<span id="error-fileupload" class="text-danger" style="display:none;"></span>
+      <input id="fileupload" name="fileupload" type="file" />
+    </div><br>
+
+    <!-- Checkbox -->
+    <div class="form__checkbox">
+      <input  id="checkbox1" name="checkbox1" value="accepted" checked type="checkbox" required>
+      <label for="checkbox1">I agree to the <a href="tos.html">Terms and conditions</a> and the <a href="privacy.html">Privacy policy</a> of this platform</label>
+    </div>
+	<br>
+	<span id="error-checkbox1" class="text-danger" style="display:none;"></span>
+	<br>
+
+    <input type="submit" name="submit" class="form__submit btn btn--blue-bg" id="submitl" value="SUBMIT" />
+  </form>
 
 
 
-</form>
 
 				</div>
 			</div>  <!-- End Modal login -->
@@ -760,34 +813,171 @@
 				</div>
 			</div>
 	  </section>    <!-- Modal for animation -->
-	  <script>
-document.getElementById('LoginForm').addEventListener('submit', function(e) {
-  e.preventDefault(); // stop form from reloading page
 
-  const form = e.target;
-  const formData = new FormData(form);
+<script>
+	const fileInput = document.getElementById("fileupload");
+const fileNameDisplay = document.getElementById("file-name");
 
-  fetch('sendmail.php', {
-    method: 'POST',
-    body: formData
-  }).then(response => response.text()).then(result => {
-    showToast("Message sent successfully!");
-    form.reset(); // optional: reset the form
-  }).catch(error => {
-    showToast("Something went wrong!", true);
-  });
+fileInput.addEventListener("change", function () {
+  if (fileInput.files.length > 0) {
+    const fileName = fileInput.files[0].name;
+    fileNameDisplay.textContent = `Selected file: ${fileName}`;
+  } else {
+    fileNameDisplay.textContent = "";
+  }
 });
+  const form = document.getElementById("LoginForm");
+ 
 
-function showToast(message, isError = false) {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.style.backgroundColor = isError ? '#dc3545' : '#28a745'; // red or green
-  toast.style.display = 'block';
+  const fields = ["namec", "phonec", "emailc", "addressc", "conumberc","businessc","checkbox1","fileupload"];
 
+  const validations = {
+    namec: (v) => v.trim() ? null : "Name is required",
+    phonec: (v) => v.trim() ? null : "Phone number is required",
+	 businessc: (v) => v.trim() ? null : "Company is required",
+    emailc: (v) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+        ? null
+        : "Invalid email address",
+    addressc: (v) =>
+      v.trim()
+        ? null
+        : "Address is required",
+    "conumberc": (v) => {
+      if (!v.trim()) return "Company number is required";
+      if (!/^\d{8}$/.test(v)) return "Must be exactly 8 digits";
+      return null;
+    },
+	fileupload: (v) => {
+	  if (!v) return "Logo is required";
+	  const fileInput = document.getElementById("fileupload");
+	  const file = fileInput.files[0];
+	  if (file && file.size > 1024 * 1024) return "Logo size must be less than 1MB";
+	  return null;
+	},
+	checkbox1: (val) => val ? null : "You must agree to the Terms and conditions and Privacy policy ",
+  };
+
+  // Real-time field-level validation on input
+  fields.forEach((f) => {
+    const inp = document.getElementById(f);
+    const err = document.getElementById("error-" + f);
+
+    inp.addEventListener("input", () => {
+		let msg = "";
+		if(f === "checkbox1") {
+
+			 msg = validations[f](inp.checked);
+		}else{
+			 msg = validations[f](inp.value);
+
+		}
+	//   console.log(msg,"msg");
+      if (msg) {
+        err.textContent = msg;
+        err.style.display = "inline";
+        inp.classList.add("is-invalid");
+      } else {
+        err.style.display = "none";
+        err.textContent = "";
+        inp.classList.remove("is-invalid");
+      }
+    });
+  });
+
+  // Full form submit
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let hasError = false;
+
+    // Validate all fields
+    fields.forEach((f) => {
+      const inp = document.getElementById(f);
+      const err = document.getElementById("error-" + f);
+      const msg = validations[f](inp.value);
+      if (msg) {
+        err.textContent = msg;
+        err.style.display = "inline";
+        inp.classList.add("is-invalid");
+        hasError = true;
+      } else {
+        err.style.display = "none";
+        err.textContent = "";
+        inp.classList.remove("is-invalid");
+      }
+    });
+
+    if (hasError) return;
+
+    // Send to API
+    const data = Object.fromEntries(new FormData(form).entries());
+	console.log(data,"data");
+	const formData = new FormData();
+	 formData.append('name', data?.namec);
+	 formData.append('phoneNo', data?.phonec);
+      formData.append('email', data?.emailc);
+      formData.append('company_no', data?.conumberc);
+      formData.append('address', data?.addressc);
+      formData.append('company_name', data?.businessc);
+	  formData.append('plan', data?.radio);
+      formData.append('logo', data?.fileupload);
+	  formData.append('user_type',"partner");
+	  formData.append('senda_web', true);
+    try {
+      const res = await fetch("https://app.senda.ventures/api/v1/accountant-users/add", {
+        method: "POST",
+        // headers: { "Content-Type": "application/json" },
+         body: formData,
+      });
+	  console.log(res,"res");
+	   const data = await res.json(); // Get the actual JSON data
+	   if(data?.success === true) {
+		document.getElementById("toast").textContent = data.message;
+		document.getElementById("toast").style.backgroundColor = "#28a745"; // Green for success
+		document.getElementById("toast").style.display = "block";
+		setTimeout(() => {
+		  document.getElementById("toast").style.display = "none";
+		}, 3000);
+		  // Close modal
+//   const modal = document.querySelector(".modal--signuplogin");
+//   if (modal) {
+//     modal.style.display = "none"; // OR use classList.remove() if you toggle with classes
+//   }
+  // Remove modal--visible class
+  const modal = document.querySelector(".modal--signuplogin");
+  const modalOverlay = document.querySelector(".modal__content--login");
+  if (modal.classList.contains("modal--visible")) {
+    modal.classList.remove("modal--visible");
+  }
+   if (modalOverlay.classList.contains("modal__content--visible")) {
+    modalOverlay.classList.remove("modal__content--visible");
+  }
+  fileNameDisplay.textContent = "";
+		form.reset();
+	  } else {
+		document.getElementById("toast").textContent = data.message ;
+		document.getElementById("toast").style.backgroundColor = "#f44336"; // Red for error
+		 document.getElementById("toast").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("toast").style.display = "none";
+        }, 3000);
+        // form.reset();
+	  }
+    } catch (err) {
+      console.error(err);
+
+  // Set the error message in the toast
+  const toast = document.getElementById("toast");
+  toast.textContent = "An error occurred. Please retry."; // or use err.message for specific error
+  toast.style.backgroundColor = "#f44336"; // optional: red for error
+
+  // Show the toast
+  toast.style.display = "block";
   setTimeout(() => {
-    toast.style.display = 'none';
-  }, 3000); // hide after 3 seconds
-}
+    toast.style.display = "none";
+  }, 3000);
+    }
+  });
 </script>
 
 <script src="js/jquery-3.3.1.min.js"></script>
