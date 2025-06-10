@@ -795,6 +795,7 @@ h6{
 }
 .intro__buttons{
 	padding:20px 0 0 0;
+	 margin-top: 20px;
 }
  .intro__buttons--centered{
 	 width:100%;
@@ -1897,11 +1898,13 @@ select.select__field{
 .modal__wrapper {
   position: fixed;
   z-index: 9999;
-  top: 20%;
+  top: 5%;
   left: 50%;
   width: 50%;
   margin-left: -25%;
   background-color: #fff;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 .modal__wrapper--image {
   top: 10%;
@@ -2301,7 +2304,7 @@ ul.grid__list--fmenu li a:hover {
   max-width:60%;
 }
 .modal__wrapper {
-  top: 18%;
+  top: 5%;
   width: 70%;
   margin-left: -35%;
 }
