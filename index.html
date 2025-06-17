@@ -6,7 +6,7 @@
 <meta name="description" content="Business tools that help businesses get things done" />
 <meta name="keywords" content="saas, senda, senda ventures, business tools" />
 <title>Senda Ventures</title>
-<link rel="icon" type="image/x-icon" href="/images/favicon1.png">
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 <link rel="stylesheet" href="css/swiper.css">
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,900" rel="stylesheet"> 
@@ -688,7 +688,7 @@
       <label class="form__label" for="conumberc">Company number
 		<span id="error-conumberc" class="text-danger" style="display:none;"></span>
 	  </label>
-      <input name="conumberc" id="conumberc" class="form__input" type="number"  />
+      <input name="conumberc" id="conumberc" class="form__input" type="text"  />
     </div>
 
     <!-- Address -->
@@ -714,7 +714,7 @@
 
     <!-- File Upload -->
     <h3 class="form__subtitle">Attach logo here</h3>
-    <a>Image should be 1000px x 300px, PNG or JPG, max file size: 1Mb</a>
+    <a>Image should be 147px x 147px, PNG or JPG, max file size: 1Mb</a>
     <div class="form__file">
       <label for="fileupload" class="file__label">Upload
 		<span id="file-name" class="file__name"></span>
@@ -868,16 +868,17 @@ fileInput.addEventListener("change", function () {
         : "Address is required",
     "conumberc": (v) => {
       if (!v.trim()) return "Company number is required";
-      if (!/^\d{8}$/.test(v)) return "Must be exactly 8 digits";
+    //   if (!/^\d{8}$/.test(v)) return "Must be exactly 8 digits";
+	if (!/^[a-zA-Z0-9]{8}$/.test(v)) return "Must be exactly 8 alphanumeric characters";
       return null;
     },
-	fileupload: (v) => {
-	  if (!v) return "Logo is required";
-	  const fileInput = document.getElementById("fileupload");
-	  const file = fileInput.files[0];
-	  if (file && file.size > 1024 * 1024) return "Logo size must be less than 1MB";
-	  return null;
-	},
+	// fileupload: (v) => {
+	//   if (!v) return "Logo is required";
+	//   const fileInput = document.getElementById("fileupload");
+	//   const file = fileInput.files[0];
+	//   if (file && file.size > 1024 * 1024) return "Logo size must be less than 1MB";
+	//   return null;
+	// },
 	checkbox1: (val) => val ? null : "You must agree to the Terms and conditions and Privacy policy ",
   };
 
